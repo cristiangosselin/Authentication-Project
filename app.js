@@ -72,10 +72,12 @@ passport.deserializeUser(function(id, done) {
   });
 });
 
+// callbackURL: "http://localhost:3000/auth/google/secrets"
+
 passport.use(new GoogleStrategy({
     clientID: "197506817647-rk8jca7kg2i9tc90464n79hkaf1tapak.apps.googleusercontent.com",
     clientSecret: "z8MFgjWIds2CcFwljXgS9M-W",
-    callbackURL: "http://localhost:3000/auth/google/secrets",
+    callbackURL: "https://metric-sorry-98327.herokuapp.com/auth/google/secrets",
     // userProfileURL:"https://www.googleapis.com/oauth2/v3/userinfo"
   },
   function(accessToken, refreshToken, profile, cb) {
