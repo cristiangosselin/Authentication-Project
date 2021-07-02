@@ -94,7 +94,7 @@ passport.use(new GoogleStrategy({
 passport.use(new FacebookStrategy({
     clientID: "829895580991269",
     clientSecret: "41f3674261ef4dfab27ea5378014e2dd",
-    callbackURL: "http://localhost:3000/auth/facebook/secrets"
+    callbackURL: "https://metric-sorry-98327.herokuapp.com/auth/facebook/secrets"
   },
   function(accessToken, refreshToken, profile, cb) {
     User.findOrCreate({ facebookId: profile.id }, function (err, user) {
