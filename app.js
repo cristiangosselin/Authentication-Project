@@ -16,9 +16,6 @@ const findOrCreate = require('mongoose-findorcreate');
 // const saltRounds = 10;
 const app = express();
 
-// CLIENT_ID=197506817647-rk8jca7kg2i9tc90464n79hkaf1tapak.apps.googleusercontent.com
-// CLIENT_SECRET=z8MFgjWIds2CcFwljXgS9M-W
-
 
 app.use(express.static("public"));
 app.set("view engine", "ejs");
@@ -32,10 +29,10 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-var dbURL = "mongodb+srv://prueba:prueba@cluster0.hysjb.mongodb.net/prove2";
+// var dbURL = "mongodb+srv://prueba:prueba@cluster0.hysjb.mongodb.net/prove2";
 // var dbURL = "mongodb://localhost:27017/userDB"
 
-mongoose.connect(dbURL, { useUnifiedTopology: true, useNewUrlParser: true});
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost:27017/userDB", { useUnifiedTopology: true, useNewUrlParser: true});
 
 // mongoose.set("useCreateIndex", true);
 // mongoose.set('useNewUrlParser', true);
@@ -71,12 +68,13 @@ passport.deserializeUser(function(id, done) {
     done(err, user);
   });
 });
-
+// CLIENT_ID=197506817647-rk8jca7kg2i9tc90464n79hkaf1tapak.apps.googleusercontent.com
+// CLIENT_SECRET=z8MFgjWIds2CcFwljXgS9M-W
 // callbackURL: "http://localhost:3000/auth/google/secrets"
 
 passport.use(new GoogleStrategy({
-    clientID: "197506817647-rk8jca7kg2i9tc90464n79hkaf1tapak.apps.googleusercontent.com",
-    clientSecret: "z8MFgjWIds2CcFwljXgS9M-W",
+    clientID: process.env.CLIENT_ID ,
+    clientSecret: process.env.CLIENT_SECRET,
     callbackURL: "https://metric-sorry-98327.herokuapp.com/auth/google/secrets",
     // userProfileURL:"https://www.googleapis.com/oauth2/v3/userinfo"
   },
@@ -92,8 +90,8 @@ passport.use(new GoogleStrategy({
 // CLIENT_SECRET_FB=41f3674261ef4dfab27ea5378014e2dd
 
 passport.use(new FacebookStrategy({
-    clientID: "829895580991269",
-    clientSecret: "41f3674261ef4dfab27ea5378014e2dd",
+    clientID: process.env.CLIENT_ID_FB,
+    clientSecret: process.env.CLIENT_SECRET_FB,
     callbackURL: "https://metric-sorry-98327.herokuapp.com/auth/facebook/secrets"
   },
   function(accessToken, refreshToken, profile, cb) {
