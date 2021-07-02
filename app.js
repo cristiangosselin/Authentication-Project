@@ -16,6 +16,10 @@ const findOrCreate = require('mongoose-findorcreate');
 // const saltRounds = 10;
 const app = express();
 
+// CLIENT_ID=197506817647-rk8jca7kg2i9tc90464n79hkaf1tapak.apps.googleusercontent.com
+// CLIENT_SECRET=z8MFgjWIds2CcFwljXgS9M-W
+
+
 app.use(express.static("public"));
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended: true}));
@@ -69,8 +73,8 @@ passport.deserializeUser(function(id, done) {
 });
 
 passport.use(new GoogleStrategy({
-    clientID: process.env.CLIENT_ID,
-    clientSecret: process.env.CLIENT_SECRET,
+    clientID: "197506817647-rk8jca7kg2i9tc90464n79hkaf1tapak.apps.googleusercontent.com",
+    clientSecret: "z8MFgjWIds2CcFwljXgS9M-W",
     callbackURL: "http://localhost:3000/auth/google/secrets",
     // userProfileURL:"https://www.googleapis.com/oauth2/v3/userinfo"
   },
@@ -82,9 +86,12 @@ passport.use(new GoogleStrategy({
   }
 ));
 
+// CLIENT_ID_FB=829895580991269
+// CLIENT_SECRET_FB=41f3674261ef4dfab27ea5378014e2dd
+
 passport.use(new FacebookStrategy({
-    clientID: process.env.CLIENT_ID_FB,
-    clientSecret: process.env.CLIENT_SECRET_FB,
+    clientID: "829895580991269",
+    clientSecret: "41f3674261ef4dfab27ea5378014e2dd",
     callbackURL: "http://localhost:3000/auth/facebook/secrets"
   },
   function(accessToken, refreshToken, profile, cb) {
@@ -184,59 +191,8 @@ app.post("/register", function(req, res){
       })
     }
   })
-
-  // bcrypt.hash(req.body.password, saltRounds, function(err, hash) {
-  //   // Store hash in your password DB.
-  //   const newUser = new User ({
-  //     email: req.body.username,
-  //     password: hash
-  //   })
-  //   newUser.save(function(err){
-  //     if (err){
-  //       console.log(err);
-  //     } else {
-  //       res.render("secrets");
-  //     }
-  //   })
-  // });
-
 })
 
-// app.post("/login", function(req, res){
-//   const user = new User({
-//     username: req.body.username,
-//     password: req.body.password
-//   });
-//   req.login(user, function(err){
-//     if (err){
-//       console.log(err);
-//     } else {
-//       passport.authenticate("local");
-//
-//       // (req, res, function(){
-//       //   res.redirect("/secrets");
-//       // })
-//
-//     }
-//   });
-//
-//   // const userName = req.body.username;
-//   // const userPass = req.body.password;
-//   // User.findOne({email: userName}, function(err, foundUser){
-//   //   if (err){
-//   //     console.log(err);
-//   //   } else {
-//   //     if (foundUser){
-//   //         bcrypt.compare(userPass, foundUser.password, function(err, result) {
-//   //           // result == true
-//   //           if (result === true){
-//   //             res.render("secrets");
-//   //           }
-//   //         });
-//   //       }
-//   //     }
-//   // })
-// });
 
 app.post('/login', function(req, res, next) {
   passport.authenticate('local', function(err, user, info) {
